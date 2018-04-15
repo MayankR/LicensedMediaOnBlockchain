@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Consumer | Licensed Music</title>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'> -->
+  <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+</head>
+<body class="container">
+  <h1>Licensed Music On Blockchain</h1>
+  <h2>Consumer Console</h2>
+  Account Number: <input type="number" id="account-number">
+  <a href="#" onclick="refreshPage()" class="btn btn-primary">Refresh Page</a>
+
+  <h3>Available Media</h3>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Media ID</th>
+          <th>Media Name</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody id="av-table-body">
+        <tr>
+          <td>1</td>
+          <td>Med1</td>
+          <td>100</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <input type="number" id="media-id" placeholder="Media ID to buy">
+  <a href="#" onclick="publishMedia()" class="btn btn-primary">Buy Media</a>
+
+  <h3>Purchased Media</h3>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Media ID</th>
+          <th>Media Name</th>
+          <th>Price</th>
+          <th>URL</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Med1</td>
+          <td>100</td>
+          <td>http://urlman.com</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+<script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+<script src="./consumer.js"></script>
+</html>
