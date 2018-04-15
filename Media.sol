@@ -175,7 +175,7 @@ contract MediaContract {
         }
 
         PurchasedMediaDetails memory newMediaP = PurchasedMediaDetails({id: _id, 
-        name: mediaMap[_id].name, encURL: "na"});
+        name: mediaMap[_id].name, encURL: "Not Available"});
         purchasedMedia[msg.sender].push(newMediaP);
 
         emit PaymentSuccessful(msg.sender, _id, allMedia[i].creator);
@@ -198,6 +198,21 @@ contract MediaContract {
     
   }
 
+  function getPurchasedMediaCount() public view returns (uint) {
+    require(isCompany[msg.sender] || isIndividual[msg.sender]);
+
+    return purchasedMedia[msg.sender].length;
+  }
+
+  function getPurchasedMediaAtIndex(uint index) public view returns (uint, bytes32, string) {
+    require(isCompany[msg.sender] || isIndividual[msg.sender]);
+
+    require(index < purchasedMedia[msg.sender].length);
+
+    return (purchasedMedia[msg.sender][index].id, 
+      purchasedMedia[msg.sender][index].name, purchasedMedia[msg.sender][index].encURL);
+  }
+
   function getPurchasedMediaDetails(uint _id) public view returns (string) {
     require(isCompany[msg.sender] || isIndividual[msg.sender]);
 
@@ -207,6 +222,6 @@ contract MediaContract {
       }
     }
 
-    return "nan";
+    return "ERR";
   }
 }

@@ -11,6 +11,8 @@ a
 (8) 0xea1e6c346a290b94b2ae13e0979db8eb7e8f4f13		
 (9) 0x003b9f03dcbbc2422701e5e1c5efb6c6489d8141		
 
+fs.appendFile('log.txt', JSON.stringify(abiDefinition, null, 2), function (err) { })
+
 Web3 = require('web3')
 web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 solc = require('solc')

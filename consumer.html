@@ -22,16 +22,12 @@
         </tr>
       </thead>
       <tbody id="av-table-body">
-        <tr>
-          <td>1</td>
-          <td>Med1</td>
-          <td>100</td>
-        </tr>
       </tbody>
     </table>
   </div>
   <input type="number" id="media-id" placeholder="Media ID to buy">
-  <a href="#" onclick="publishMedia()" class="btn btn-primary">Buy Media</a>
+  <input type="number" id="media-cost" placeholder="Amount to pay">
+  <a href="#" onclick="buyMedia()" class="btn btn-primary">Buy Media</a>
 
   <h3>Purchased Media</h3>
   <div class="table-responsive">
@@ -40,17 +36,10 @@
         <tr>
           <th>Media ID</th>
           <th>Media Name</th>
-          <th>Price</th>
           <th>URL</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Med1</td>
-          <td>100</td>
-          <td>http://urlman.com</td>
-        </tr>
+      <tbody id="pur-table-body">
       </tbody>
     </table>
   </div>
