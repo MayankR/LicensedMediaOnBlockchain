@@ -1,14 +1,19 @@
 a
-(0) 0x13c2aee3062aaa408df892304024a6c4cd4d4865		owner
-(1) 0xd20a982eb0a06481250d5867262e8f5e420eda9f		creator
-(2) 0x3bd13f2069bfba617f09f6fe9a806c386f740465		creator
-(3) 0xee12722ca52a52ba146e5bb1529806d814257aa9		stake
-(4) 0xc8c5e55b38398b6ebfcee1469a89439381035691		stake
-(5) 0x1e59b9659bcee15511d0aaa90d017808dda276c7		ind
-(6) 0x3f0851c52925bd131ff01222c6bb0e9f7dc29472		
-(7) 0x2dae69364c4a6243aa529881636d7ab64b1efb4f		
-(8) 0x76de51327b77b04fc1d3263fdd3cab3184e75eb9		
-(9) 0x2f35df7efcc0abba306d75b17fa32c34c5001203		
+	0x330ca366ae63fac4ff104499a33674a3713990ac		contract 	
+(0) 0xf95193173ac435a0e66ca07167c3bcffe8cc2d3c		owner		[ 999999, 99999997351398 ]
+(1) 0xfe4e0c434a0ba995562ecdaa502ba257ae257b42		creator		[ 999999, 99999999423703 ]
+(2) 0xee7508e874294699bb71e1779b96dbf905a1d706		creator		
+(3) 0xc0f512f7b2a9317719e42316595c88bdce0d4078		stake		[ 1000000, 40 ]
+(4) 0x227024f7f963f285be80adba309ace39fd7d106f		stake		[ 1000000, 50 ]
+(5) 0xf394b84e444d5d18d95f7698be3119075721e64e		ind			[ 999999, 99999999824305 ]
+(6) 0x5008b948f4f435c26b4f310f97d5c0d9feb045b1		ind			
+(7) 0x2e7d80cd56210516ad87fa7e4049e5f039713517		
+(8) 0xea1e6c346a290b94b2ae13e0979db8eb7e8f4f13		
+(9) 0x003b9f03dcbbc2422701e5e1c5efb6c6489d8141		
+
+Web3 = require('web3')
+web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+solc = require('solc')
 
 code = fs.readFileSync('Media.sol').toString()
 compiledCode = solc.compile(code)
@@ -24,7 +29,7 @@ contractInstance.getMediaCount.call({from: web3.eth.accounts[5]})
 contractInstance.createMedia("m1", [0xee12722ca52a52ba146e5bb1529806d814257aa9, 0xc8c5e55b38398b6ebfcee1469a89439381035691], [100, 200], [40, 50], {from: web3.eth.accounts[1], gas:3000000})
 web3.eth.getBalance('0x1e59b9659bcee15511d0aaa90d017808dda276c7')
 
-contractInstance.createMedia("m1", [0xee12722ca52a52ba146e5bb1529806d814257aa9, 0xc8c5e55b38398b6ebfcee1469a89439381035691], [100, 200], [40, 50], {from: web3.eth.accounts[1], gas:3000000})
+contractInstance.createMedia("m1", ['0xc0f512f7b2a9317719e42316595c88bdce0d4078', '0x227024f7f963f285be80adba309ace39fd7d106f'], [100, 200], [40, 50], {from: web3.eth.accounts[1], gas:3000000})
 contractInstance.createMedia("me2", [0xc8c5e55b38398b6ebfcee1469a89439381035691], [500], [70], {from: web3.eth.accounts[1], gas:3000000})
 contractInstance.createMedia("med3", [0xee12722ca52a52ba146e5bb1529806d814257aa9], [273], [81], {from: web3.eth.accounts[2], gas:3000000})
 contractInstance.getMediaCount.call({from: web3.eth.accounts[5]})

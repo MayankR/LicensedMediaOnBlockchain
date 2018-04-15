@@ -163,7 +163,16 @@ contract MediaContract {
           revert();
         }
 
-        //TODO: pay stakeholders
+        //pay stakeholders
+        if(isIndividual[msg.sender]) {
+          for(uint m=0;m<allMedia[i].costIndividual.length;m++) {
+            allMedia[i].stakeholders[m].transfer(allMedia[i].costIndividual[m]);
+          }
+        } else {
+          for(uint n=0;n<allMedia[i].costCompany.length;n++) {
+            allMedia[i].stakeholders[n].transfer(allMedia[i].costCompany[n]);
+          }
+        }
 
         PurchasedMediaDetails memory newMediaP = PurchasedMediaDetails({id: _id, 
         name: mediaMap[_id].name, encURL: "na"});
