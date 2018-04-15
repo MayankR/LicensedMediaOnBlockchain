@@ -16,6 +16,7 @@ contract MediaContract {
     uint id;
     bytes32 name;
     string encURL;
+    string pubKey;
   }
 
   Media[] public allMedia;
@@ -32,7 +33,7 @@ contract MediaContract {
   mapping(address => uint) public pendingReturns;
 
   event PurchaseFailed(bytes32 reason, address buyer, uint mediaID);
-  event PaymentSuccessful(address buyer, uint mediaID, address creator);
+  event PaymentSuccessful(address buyer, uint mediaID, address creator, string pubKey);
   event EncURLAdded(address buyer, uint mediaID);
 
   function MediaContract() public {
@@ -129,7 +130,7 @@ contract MediaContract {
     return ("nan", 0, 0);
   }
 
-  function buyMedia(uint _id) public payable {
+  function buyMedia(uint _id, string _pubKey) public payable {
     require(!isCreator[msg.sender]);
 
     require(isIndividual[msg.sender] || isCompany[msg.sender]);
@@ -175,10 +176,10 @@ contract MediaContract {
         }
 
         PurchasedMediaDetails memory newMediaP = PurchasedMediaDetails({id: _id, 
-        name: mediaMap[_id].name, encURL: "Not Available"});
+        name: mediaMap[_id].name, encURL: "Not Available", pubKey: _pubKey});
         purchasedMedia[msg.sender].push(newMediaP);
 
-        emit PaymentSuccessful(msg.sender, _id, allMedia[i].creator);
+        emit PaymentSuccessful(msg.sender, _id, allMedia[i].creator, _pubKey);
         return;
       }
 
