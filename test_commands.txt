@@ -1,0 +1,41 @@
+a
+(0) 0x13c2aee3062aaa408df892304024a6c4cd4d4865		owner
+(1) 0xd20a982eb0a06481250d5867262e8f5e420eda9f		creator
+(2) 0x3bd13f2069bfba617f09f6fe9a806c386f740465		creator
+(3) 0xee12722ca52a52ba146e5bb1529806d814257aa9		stake
+(4) 0xc8c5e55b38398b6ebfcee1469a89439381035691		stake
+(5) 0x1e59b9659bcee15511d0aaa90d017808dda276c7		ind
+(6) 0x3f0851c52925bd131ff01222c6bb0e9f7dc29472		
+(7) 0x2dae69364c4a6243aa529881636d7ab64b1efb4f		
+(8) 0x76de51327b77b04fc1d3263fdd3cab3184e75eb9		
+(9) 0x2f35df7efcc0abba306d75b17fa32c34c5001203		
+
+code = fs.readFileSync('Media.sol').toString()
+compiledCode = solc.compile(code)
+abiDefinition = JSON.parse(compiledCode.contracts[':MediaContract'].interface)
+MediaContract = web3.eth.contract(abiDefinition)
+byteCode = compiledCode.contracts[':MediaContract'].bytecode
+deployedContract = MediaContract.new({data: byteCode, from: web3.eth.accounts[0], gas: 4700000})
+contractInstance = MediaContract.at(deployedContract.address)
+
+contractInstance.getMediaAtIndex.call(1, {from: web3.eth.accounts[5]}).toLocaleString()
+contractInstance.getMediaAtIndex.call(0, {from: web3.eth.accounts[5]})
+contractInstance.getMediaCount.call({from: web3.eth.accounts[5]})
+contractInstance.createMedia("m1", [0xee12722ca52a52ba146e5bb1529806d814257aa9, 0xc8c5e55b38398b6ebfcee1469a89439381035691], [100, 200], [40, 50], {from: web3.eth.accounts[1], gas:3000000})
+web3.eth.getBalance('0x1e59b9659bcee15511d0aaa90d017808dda276c7')
+
+contractInstance.createMedia("m1", [0xee12722ca52a52ba146e5bb1529806d814257aa9, 0xc8c5e55b38398b6ebfcee1469a89439381035691], [100, 200], [40, 50], {from: web3.eth.accounts[1], gas:3000000})
+contractInstance.createMedia("me2", [0xc8c5e55b38398b6ebfcee1469a89439381035691], [500], [70], {from: web3.eth.accounts[1], gas:3000000})
+contractInstance.createMedia("med3", [0xee12722ca52a52ba146e5bb1529806d814257aa9], [273], [81], {from: web3.eth.accounts[2], gas:3000000})
+contractInstance.getMediaCount.call({from: web3.eth.accounts[5]})
+contractInstance.createMedia("medi4", [0xee12722ca52a52ba146e5bb1529806d814257aa9], [122], [11], {from: web3.eth.accounts[2], gas:3000000})
+contractInstance.getMediaCount.call({from: web3.eth.accounts[5]})
+contractInstance.getMediaAtIndex.call(1, {from: web3.eth.accounts[5]})
+pfailevent = contractInstance.PurchaseFailed({},{fromBlock: 0, toBlock: 'latest'});
+pfailevent.watch(function(error, result){console.log("on watch"); console.log(arguments);});
+contractInstance.buyMedia(4, {from: web3.eth.accounts[5], value:11, gas:3000000})
+contractInstance.getPurchasedMediaDetails(4, {from: web3.eth.accounts[5]})
+contractInstance.buyMedia(3, {from: web3.eth.accounts[5], value:81, gas:3000000})
+contractInstance.getPurchasedMediaDetails(3, {from: web3.eth.accounts[5]})
+contractInstance.buyMedia(1, {from: web3.eth.accounts[5], value:81, gas:3000000})
+contractInstance.addEnctyptedURL("http://thisisencrytped.yo", 1, '0x1e59b9659bcee15511d0aaa90d017808dda276c7', {from: web3.eth.accounts[1]})

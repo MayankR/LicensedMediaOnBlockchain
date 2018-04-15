@@ -141,7 +141,7 @@ contract MediaContract {
           if(allMedia[i].id == purchasedMedia[msg.sender][j].id) {
             // pendingReturns[msg.sender] += msg.value;
             emit PurchaseFailed("boughtERR", msg.sender, _id);
-            revert();         //TODO: verify if ETH is returned
+            revert();
           }
         }
 
@@ -160,7 +160,7 @@ contract MediaContract {
         // Check is correct amount paid
         if(msg.value != cost) {
           emit PurchaseFailed("amountERR", msg.sender, _id);
-          revert();         //TODO: verify if ETH is returned
+          revert();
         }
 
         //TODO: pay stakeholders
@@ -179,11 +179,6 @@ contract MediaContract {
   function addEnctyptedURL(string _url, uint _id, address buyer) public {
     require(mediaMap[_id].creator == msg.sender);
 
-    // PurchasedMediaDetails memory newMedia = new PurchasedMediaDetails({id: _id, 
-    //     name: mediaMap[_id].name, buyer: buyer, encURL: _url});
-
-    // purchasedMedia[buyer].push(newMedia);
-
     for(uint i=0;i<purchasedMedia[buyer].length;i++) {
       if(purchasedMedia[buyer][i].id == _id) {
         purchasedMedia[buyer][i].encURL = _url;
@@ -191,7 +186,6 @@ contract MediaContract {
         return;
       }
     }
-
     
   }
 
