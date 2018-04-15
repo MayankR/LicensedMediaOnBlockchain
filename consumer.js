@@ -19,8 +19,8 @@ paymentSuccessfulEvent.watch(function(error, result){
     }
 });
 
-var paymentSuccessfulEvent = contractInstance.EncURLAdded();
-paymentSuccessfulEvent.watch(function(error, result){
+var encURLAddedEvent = contractInstance.EncURLAdded();
+encURLAddedEvent.watch(function(error, result){
     if (!error)
     {
       // $("#instructor").html(result.args.name + ' (' + result.args.age + ' years old)');
@@ -85,9 +85,21 @@ function populatePage() {
     document.getElementById("pur-table-body").innerHTML += "<tr>\
           <td>" + mediaInfo[0] + "</td>\
           <td>" + web3.toAscii(mediaInfo[1]) + "</td>\
-          <td>" + mediaInfo[2] + "</td>\
+          <td id=\"enc-url-" + i + "\">" + mediaInfo[2] + "</td>\
+          <td id=\"dec-url-" + i + "\"><a href=\"#\" onclick=\"decryptURL(" + i + ")\" class=\"btn btn-primary\">Decrypt This URL</a></td>\
         </tr>"
   }
+}
+
+function decryptURL(index) {
+  console.log("index: " + index);
+  var decrypt = new JSEncrypt();
+  decrypt.setPrivateKey($('#priv-key').val());
+  console.log("decrypting: " + document.getElementById("enc-url-" + index).innerHTML);
+  var uncrypted = decrypt.decrypt(document.getElementById("enc-url-" + index).innerHTML);
+  console.log("decrypted URL: " + uncrypted);
+
+  document.getElementById("dec-url-" + index).innerHTML = uncrypted;
 }
 
 $(document).ready(function() {

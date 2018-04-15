@@ -12,7 +12,14 @@ paymentSuccessfulEvent.watch(function(error, result){
     {
       // $("#instructor").html(result.args.name + ' (' + result.args.age + ' years old)');
       console.log("res " + result);
-      console.log(result.args);
+      console.log(result.args["pubKey"]);
+      var encrypt = new JSEncrypt();
+      encrypt.setPublicKey(result.args["pubKey"]);
+      var encrypted = encrypt.encrypt($('#media-url').val());
+      console.log("encrypted " + $('#media-url').val() + " to " + encrypted);
+      console.log("buyer: " + result.args["buyer"]);
+      contractInstance.addEnctyptedURL(encrypted, result.args["mediaID"] , result.args["buyer"], 
+        {from: web3.eth.accounts[account], gas:3000000});
     } else {
       console.log("err" + error);
     }
