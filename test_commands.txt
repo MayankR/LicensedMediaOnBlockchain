@@ -13,6 +13,9 @@ a
 
 0xc0f512f7b2a9317719e42316595c88bdce0d4078, 0x227024f7f963f285be80adba309ace39fd7d106f
 
+openssl genrsa -out rsa_1024_priv.pem 1024
+openssl rsa -pubout -in rsa_1024_priv.pem -out rsa_1024_pub.pem
+
 fs.appendFile('log.txt', JSON.stringify(abiDefinition, null, 2), function (err) { })
 
 Web3 = require('web3')
