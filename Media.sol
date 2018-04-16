@@ -35,8 +35,20 @@ contract MediaContract {
   event PurchaseFailed(bytes32 reason, address buyer, uint mediaID);
   event PaymentSuccessful(address buyer, uint mediaID, address creator, string pubKey);
   event EncURLAdded(address buyer, uint mediaID);
+  event MediaCreated(bytes32 name, address creator, uint mediaID);
 
-  function MediaContract() public {
+  function MediaContract(address[] users, uint[] userType) public {
+    require(users.length == userType.length);
+
+    for(uint i=0;i<users.length;i++) {
+      if(userType[i] == 1) {
+        isCreator[users[i]] = true;
+      } else if(userType[i] == 2) {
+        isIndividual[users[i]] = true;
+      } else if(userType[i] == 3) {
+        isCompany[users[i]] = true;
+      }
+    }
     latestID = 0;
   }
 
@@ -45,6 +57,7 @@ contract MediaContract {
   	// Make sure this is not individual or a company
   	require(!isIndividual[msg.sender]);
   	require(!isCompany[msg.sender]);
+    require(isCreator[msg.sender]);
 
   	//Make sure the stakeholders and costs are valid
   	require(_stakeholders.length == _costCompany.length &&
@@ -61,17 +74,13 @@ contract MediaContract {
   	allMedia.push(newMedia);
     mediaMap[latestID] = newMedia;
 
-  	isCreator[msg.sender] = true;
-
+    emit MediaCreated(_name, msg.sender, latestID);
     return latestID;
   }
 
-  function getMediaCount() public returns (uint _count) {
+  function getMediaCount() public view returns (uint _count) {
     require(!isCreator[msg.sender]);
-
-    if(!(isIndividual[msg.sender] || isCompany[msg.sender])) {
-      isIndividual[msg.sender] = true;
-    }
+    require(isIndividual[msg.sender] || isCompany[msg.sender]);
 
     _count = 0;
     for(uint i=0;i<allMedia.length;i++) {
@@ -89,12 +98,9 @@ contract MediaContract {
     }
   }
 
-  function getMediaAtIndex(uint _index) public returns (bytes32, uint, uint) {
+  function getMediaAtIndex(uint _index) public view returns (bytes32, uint, uint) {
   	require(!isCreator[msg.sender]);
-
-  	if(!(isIndividual[msg.sender] || isCompany[msg.sender])) {
-      isIndividual[msg.sender] = true;
-  	}
+    require(isIndividual[msg.sender] || isCompany[msg.sender]);
 
     uint curI = 0;
   	for(uint i=0;i<allMedia.length;i++) {
@@ -188,7 +194,7 @@ contract MediaContract {
             mediaMap[_id].stakeholders[m].transfer(mediaMap[_id].costIndividual[m]);
           }
         } else {
-          for(uint n=0;n<allMedia[i].costCompany.length;n++) {
+          for(uint n=0;n<mediaMap[_id].costCompany.length;n++) {
             mediaMap[_id].stakeholders[n].transfer(mediaMap[_id].costCompany[n]);
           }
         }
