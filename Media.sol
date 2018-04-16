@@ -164,17 +164,6 @@ contract MediaContract {
           revert();
         }
 
-        //pay stakeholders
-        if(isIndividual[msg.sender]) {
-          for(uint m=0;m<allMedia[i].costIndividual.length;m++) {
-            allMedia[i].stakeholders[m].transfer(allMedia[i].costIndividual[m]);
-          }
-        } else {
-          for(uint n=0;n<allMedia[i].costCompany.length;n++) {
-            allMedia[i].stakeholders[n].transfer(allMedia[i].costCompany[n]);
-          }
-        }
-
         PurchasedMediaDetails memory newMediaP = PurchasedMediaDetails({id: _id, 
         name: mediaMap[_id].name, encURL: "Not Available", pubKey: _pubKey});
         purchasedMedia[msg.sender].push(newMediaP);
@@ -192,6 +181,18 @@ contract MediaContract {
     for(uint i=0;i<purchasedMedia[buyer].length;i++) {
       if(purchasedMedia[buyer][i].id == _id) {
         purchasedMedia[buyer][i].encURL = _url;
+
+        //pay stakeholders
+        if(isIndividual[buyer]) {
+          for(uint m=0;m<mediaMap[_id].costIndividual.length;m++) {
+            mediaMap[_id].stakeholders[m].transfer(mediaMap[_id].costIndividual[m]);
+          }
+        } else {
+          for(uint n=0;n<allMedia[i].costCompany.length;n++) {
+            mediaMap[_id].stakeholders[n].transfer(mediaMap[_id].costCompany[n]);
+          }
+        }
+
         emit EncURLAdded(buyer, _id);
         return;
       }
