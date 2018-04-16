@@ -72,7 +72,7 @@ function populatePage() {
     document.getElementById("av-table-body").innerHTML += "<tr>\
           <td>" + mediaInfo[2] + "</td>\
           <td>" + web3.toAscii(mediaInfo[0]) + "</td>\
-          <td>" + mediaInfo[1] + "</td>\
+          <td>" + mediaInfo[1] + "*10<sup>-18</sup> Eth</td>\
         </tr>"
   }
 
