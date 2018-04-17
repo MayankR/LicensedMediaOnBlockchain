@@ -16,10 +16,6 @@ paymentSuccessfulEvent.watch(function(error, result){
       if(web3.eth.accounts[account] == result.args["creator"]) {
         console.log("i am creator ");
         console.log(result.args["pubKey"]);
-        // var encrypt = new JSEncrypt();
-        // encrypt.setPublicKey(result.args["pubKey"]);
-        // var encrypted = encrypt.encrypt($('#media-url').val());
-
         var encrypted = encryptMedia(result.args["pubKey"], $('#media-url').val());
 
         console.log("encrypted " + $('#media-url').val() + " to " + encrypted);
@@ -32,6 +28,26 @@ paymentSuccessfulEvent.watch(function(error, result){
     }
 });
 
+
+var mediaCreatedEvent = contractInstance.MediaCreated();
+mediaCreatedEvent.watch(function(error, result){
+    if (!error)
+    {
+      console.log("got event");
+      console.log($("#media-name").val());
+      console.log(web3.toAscii(result.args["name"]));
+      medstr = web3.toAscii(result.args["name"]);
+      console.log(medstr.indexOf('\0'));
+      if($("#media-name").val() == medstr.substring(0, medstr.indexOf('\0')) &&
+          result.args["creator"] == web3.eth.accounts[account]) {
+        console.log("success create");
+        document.getElementById("success-msg").innerHTML = "Successfully Created!<br> Media ID: " + result.args["mediaID"];
+        document.getElementById("media-url").disabled = true;
+      }
+    } else {
+      console.log("err" + error);
+    }
+});
 
 function publishMedia() {
   // candidateName = $("#candidate").val();
