@@ -10,6 +10,9 @@
   <h2>Consumer Console</h2>
   Account Number: <input type="number" id="account-number">
   <a href="#" onclick="refreshPage()" class="btn btn-primary">Refresh Page</a>
+  <br><br>
+  Private Key: <input type="text" id="user-priv-key">
+  <a href="#" onclick="setPrivKey()" class="btn btn-primary">Set Private Key</a>
 
   <h3>Available Media</h3>
   <div class="table-responsive">
@@ -26,9 +29,7 @@
     </table>
   </div>
   <label for="pub-key">Public Key</label><br/>
-  <textarea id="pub-key" rows="8" cols="65">-----BEGIN PUBLIC KEY-----
-...
------END PUBLIC KEY-----</textarea><br/>
+  <textarea id="pub-key" rows="8" cols="65" disabled>Set Private key above</textarea><br/>
 
   <br>
   <input type="number" id="media-id" placeholder="Media ID to buy"><br>
@@ -52,11 +53,10 @@
   </div>
 
   <label for="priv-key">Private Key</label><br/>
-  <textarea id="priv-key" rows="8" cols="65">-----BEGIN RSA PRIVATE KEY-----
-...
------END RSA PRIVATE KEY-----</textarea>  
+  <textarea id="priv-key" rows="8" cols="65" disabled>Set Private key above</textarea>  
 
 </body>
+<script src="./encrypt.js"></script>
 <script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
 <script src="bin/jsencrypt.min.js"></script>

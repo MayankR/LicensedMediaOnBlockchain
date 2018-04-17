@@ -16,9 +16,12 @@ paymentSuccessfulEvent.watch(function(error, result){
       if(web3.eth.accounts[account] == result.args["creator"]) {
         console.log("i am creator ");
         console.log(result.args["pubKey"]);
-        var encrypt = new JSEncrypt();
-        encrypt.setPublicKey(result.args["pubKey"]);
-        var encrypted = encrypt.encrypt($('#media-url').val());
+        // var encrypt = new JSEncrypt();
+        // encrypt.setPublicKey(result.args["pubKey"]);
+        // var encrypted = encrypt.encrypt($('#media-url').val());
+
+        var encrypted = encryptMedia(result.args["pubKey"], $('#media-url').val());
+
         console.log("encrypted " + $('#media-url').val() + " to " + encrypted);
         console.log("buyer: " + result.args["buyer"]);
         contractInstance.addEnctyptedURL(encrypted, result.args["mediaID"] , result.args["buyer"], 

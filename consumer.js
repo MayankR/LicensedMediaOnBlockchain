@@ -32,6 +32,10 @@ encURLAddedEvent.watch(function(error, result){
     }
 });
 
+function setPrivKey() {
+  document.getElementById('pub-key').value = privToPublicKeyWallet($("#user-priv-key").val());
+  document.getElementById('priv-key').value = $("#user-priv-key").val();
+}
 
 function buyMedia() {
   // candidateName = $("#candidate").val();
@@ -93,10 +97,13 @@ function populatePage() {
 
 function decryptURL(index) {
   console.log("index: " + index);
-  var decrypt = new JSEncrypt();
-  decrypt.setPrivateKey($('#priv-key').val());
-  console.log("decrypting: " + document.getElementById("enc-url-" + index).innerHTML);
-  var uncrypted = decrypt.decrypt(document.getElementById("enc-url-" + index).innerHTML);
+  // var decrypt = new JSEncrypt();
+  // decrypt.setPrivateKey($('#priv-key').val());
+  // console.log("decrypting: " + document.getElementById("enc-url-" + index).innerHTML);
+  // var uncrypted = decrypt.decrypt(document.getElementById("enc-url-" + index).innerHTML);
+
+  var uncrypted = decryptMedia($('#priv-key').val(), document.getElementById("enc-url-" + index).innerHTML);
+
   console.log("decrypted URL: " + uncrypted);
 
   document.getElementById("dec-url-" + index).innerHTML = uncrypted;
