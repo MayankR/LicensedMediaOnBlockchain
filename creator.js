@@ -13,7 +13,8 @@ paymentSuccessfulEvent.watch(function(error, result){
       // $("#instructor").html(result.args.name + ' (' + result.args.age + ' years old)');
       console.log(web3.eth.accounts[account]);
       console.log(result.args["creator"])
-      if(web3.eth.accounts[account] == result.args["creator"]) {
+      if(web3.eth.accounts[account] == result.args["creator"] &&
+         document.getElementById("media-id-hidden").value == result.args["mediaID"]) {
         console.log("i am creator ");
         console.log(result.args["pubKey"]);
         var encrypted = encryptMedia(result.args["pubKey"], $('#media-url').val());
@@ -43,6 +44,7 @@ mediaCreatedEvent.watch(function(error, result){
         console.log("success create");
         document.getElementById("success-msg").innerHTML = "Successfully Created!<br> Media ID: " + result.args["mediaID"];
         document.getElementById("media-url").disabled = true;
+        document.getElementById("media-id-hidden").value = result.args["mediaID"];
       }
     } else {
       console.log("err" + error);
