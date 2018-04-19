@@ -76,7 +76,7 @@ function populatePage() {
     document.getElementById("av-table-body").innerHTML += "<tr>\
           <td>" + mediaInfo[2] + "</td>\
           <td>" + web3.toAscii(mediaInfo[0]) + "</td>\
-          <td>" + mediaInfo[1] + " Eth</td>\
+          <td>" + web3.fromWei(mediaInfo[1], 'ether') + " Eth</td>\
         </tr>"
   }
 

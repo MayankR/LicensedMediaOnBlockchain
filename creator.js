@@ -5,6 +5,7 @@ MediaContract = web3.eth.contract(abi);
 contractInstance = MediaContract.at('0x30eec117479f47c13719002ff4b1ea40036ff6e9');
 
 account = 1;
+urlNum = 0;
 
 var paymentSuccessfulEvent = contractInstance.PaymentSuccessful();
 paymentSuccessfulEvent.watch(function(error, result){
@@ -17,8 +18,9 @@ paymentSuccessfulEvent.watch(function(error, result){
          document.getElementById("media-id-hidden").value == result.args["mediaID"]) {
         console.log("i am creator ");
         console.log(result.args["pubKey"]);
-        var encrypted = encryptMedia(result.args["pubKey"], $('#media-url').val());
-
+        var encrypted = encryptMedia(result.args["pubKey"], ($('#media-url').val() + "/" + urlNum));
+        urlNum = urlNum + 1;
+        
         console.log("encrypted " + $('#media-url').val() + " to " + encrypted);
         console.log("buyer: " + result.args["buyer"]);
         contractInstance.addEnctyptedURL(encrypted, result.args["mediaID"] , result.args["buyer"], 
